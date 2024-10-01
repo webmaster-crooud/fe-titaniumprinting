@@ -1,12 +1,9 @@
 import type { AppProps } from 'next/app';
-import { ReactElement, ReactNode, Suspense } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import DefaultLayout from '../components/Layouts/DefaultLayout';
 import { Provider } from 'react-redux';
 import store from '../store/index';
 import Head from 'next/head';
-
-import { appWithI18Next } from 'ni18n';
-import { ni18nConfig } from 'ni18n.config.ts';
 
 // Perfect Scrollbar
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -40,4 +37,4 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         </Provider>
     );
 };
-export default appWithI18Next(App, ni18nConfig);
+export default App;

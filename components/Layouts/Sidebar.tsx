@@ -1,5 +1,4 @@
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { toggleSidebar } from '../../store/themeConfigSlice';
@@ -11,10 +10,6 @@ import IconCaretsDown from '@/components/Icon/IconCaretsDown';
 import IconMenuDashboard from '@/components/Icon/Menu/IconMenuDashboard';
 import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconMinus from '@/components/Icon/IconMinus';
-import IconMenuChat from '@/components/Icon/Menu/IconMenuChat';
-import IconMenuMailbox from '@/components/Icon/Menu/IconMenuMailbox';
-import IconMenuTodo from '@/components/Icon/Menu/IconMenuTodo';
-import IconMenuNotes from '@/components/Icon/Menu/IconMenuNotes';
 import IconMenuScrumboard from '@/components/Icon/Menu/IconMenuScrumboard';
 import IconMenuContacts from '@/components/Icon/Menu/IconMenuContacts';
 import IconMenuInvoice from '@/components/Icon/Menu/IconMenuInvoice';
@@ -80,7 +75,6 @@ const Sidebar = () => {
     };
 
     const dispatch = useDispatch();
-    const { t } = useTranslation();
 
     return (
         <div className={semidark ? 'dark' : ''}>
@@ -91,7 +85,7 @@ const Sidebar = () => {
                     <div className="flex items-center justify-between px-4 py-3">
                         <Link href="/" className="main-logo flex shrink-0 items-center">
                             <Image className="ml-[5px] flex-none" style={{ width: 'auto', height: 'auto' }} src="/assets/images/logo.svg" alt="logo" width={100} height={100} />
-                            <span className="sr-only align-middle text-2xl font-semibold dark:text-white-light lg:inline ltr:ml-1.5 rtl:mr-1.5">{t('VRISTO')}</span>
+                            <span className="sr-only align-middle text-2xl font-semibold dark:text-white-light lg:inline ltr:ml-1.5 rtl:mr-1.5">{'VRISTO'}</span>
                         </Link>
 
                         <button
@@ -108,7 +102,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'dashboard' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('dashboard')}>
                                     <div className="flex items-center">
                                         <IconMenuDashboard className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('dashboard')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'dashboard'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'dashboard' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -119,16 +113,16 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'dashboard' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/">{t('sales')}</Link>
+                                            <Link href="/">{'sales'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/analytics">{t('analytics')}</Link>
+                                            <Link href="/analytics">{'analytics'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/finance">{t('finance')}</Link>
+                                            <Link href="/finance">{'finance'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/crypto">{t('crypto')}</Link>
+                                            <Link href="/crypto">{'crypto'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -136,7 +130,7 @@ const Sidebar = () => {
 
                             <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                                 <IconMinus className="hidden h-5 w-4 flex-none" />
-                                <span>{t('Produk')}</span>
+                                <span>{'Produk'}</span>
                             </h2>
 
                             {/* Producst */}
@@ -144,7 +138,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'products' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('products')}>
                                     <div className="flex items-center">
                                         <IconMenuComponents className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('Produk')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Produk'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'products' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -155,13 +149,13 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'products' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/products/profile">{t('List Produk')}</Link>
+                                            <Link href="/products/profile">{'List Produk'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/products/create">{t('Tambah Produk')}</Link>
+                                            <Link href="/products/create">{'Tambah Produk'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/products/disabled">{t('List Produk Disable')}</Link>
+                                            <Link href="/products/disabled">{'List Produk Disable'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -172,7 +166,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'components' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('components')}>
                                     <div className="flex items-center">
                                         <IconMenuDatatables className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('Komponen')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Komponen'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'components' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -183,13 +177,13 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'components' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/components">{t('List Material')}</Link>
+                                            <Link href="/components">{'List Material'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/create">{t('Kalitas Material')}</Link>
+                                            <Link href="/components/create">{'Kalitas Material'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/disabled">{t('Ukuran')}</Link>
+                                            <Link href="/components/disabled">{'Ukuran'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -200,7 +194,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'categories' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('categories')}>
                                     <div className="flex items-center">
                                         <IconMenuScrumboard className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('Kategori')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Kategori'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'categories' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -211,13 +205,13 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'categories' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/categories">{t('List Kategori')}</Link>
+                                            <Link href="/categories">{'List Kategori'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/categories/create">{t('Tambah Kategori')}</Link>
+                                            <Link href="/categories/create">{'Tambah Kategori'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/categories/disabled">{t('List Kategori Disable')}</Link>
+                                            <Link href="/categories/disabled">{'List Kategori Disable'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -225,7 +219,7 @@ const Sidebar = () => {
 
                             <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                                 <IconMinus className="hidden h-5 w-4 flex-none" />
-                                <span>{t('Akun')}</span>
+                                <span>{'Akun'}</span>
                             </h2>
 
                             {/* Accounts */}
@@ -233,7 +227,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'accounts' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('accounts')}>
                                     <div className="flex items-center">
                                         <IconMenuUsers className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('Akun')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Akun'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'accounts' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -244,13 +238,13 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'accounts' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/accounts">{t('List Member')}</Link>
+                                            <Link href="/accounts">{'List Member'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/accounts/create">{t('Tambah Member')}</Link>
+                                            <Link href="/accounts/create">{'Tambah Member'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/accounts/disabled">{t('List Suspend Member')}</Link>
+                                            <Link href="/accounts/disabled">{'List Suspend Member'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -261,7 +255,7 @@ const Sidebar = () => {
                                 <button type="button" className={`${currentMenu === 'role' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('role')}>
                                     <div className="flex items-center">
                                         <IconMenuFontIcons className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{t('Role User')}</span>
+                                        <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Role User'}</span>
                                     </div>
 
                                     <div className={currentMenu !== 'role' ? '-rotate-90 rtl:rotate-90' : ''}>
@@ -272,13 +266,13 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'role' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/role">{t('List Role Level')}</Link>
+                                            <Link href="/role">{'List Role Level'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/role/create">{t('Tambah Role')}</Link>
+                                            <Link href="/role/create">{'Tambah Role'}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/role/disabled">{t('List Suspend Role')}</Link>
+                                            <Link href="/role/disabled">{'List Suspend Role'}</Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
