@@ -1,11 +1,13 @@
+import BlankLayout from '@/components/Layouts/BlankLayout';
+
 const Index = () => {
-    return (
-        <main>
-            <div>
-                <h1>starter page</h1>
-            </div>
-        </main>
-    );
+   return (
+      <BlankLayout>
+         <div>
+            <h1>starter page heleh</h1>
+         </div>
+      </BlankLayout>
+   );
 };
 
 export default Index;

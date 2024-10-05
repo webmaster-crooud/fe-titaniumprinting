@@ -4,8 +4,12 @@ import {
    IconAlertHexagonFilled,
    IconArrowBigRightLine,
    IconChecklist,
+   IconCircle,
    IconDatabaseEdit,
    IconEye,
+   IconEyeMinus,
+   IconFileUpload,
+   IconLoader,
    IconStar,
    IconStarFilled,
    IconTrash,
@@ -37,21 +41,26 @@ export default function ListCategoriesPage() {
    const [errors, setErrors] = useState({ name: '', slug: '' });
    const [alertMessage, setAlertMessage] = useState<{ type: string; message: string } | null>(null); // State untuk alert
 
+   const fetchCategories = async () => {
+      setLoading(true);
+      try {
+         await new Promise((resolve) => setTimeout(resolve, 1000));
+         const res = await fetch('http://localhost:3001/api/v1/categories');
+         const categories = await res.json();
+         if (!categories.data || categories.data.length === 0) {
+            setAlertMessage({ type: 'error', message: 'Data kategori kosong' });
+         } else {
+            setCategories(categories);
+         }
+      } catch (error) {
+         setAlertMessage({ type: 'error', message: 'Terjadi kesalahan saat mengambil data' });
+      } finally {
+         setLoading(false);
+      }
+   };
+
    useEffect(() => {
-      fetch('http://localhost:3001/api/v1/categories')
-         .then((res) => res.json())
-         .then((categories) => {
-            if (!categories.data || categories.data.length === 0) {
-               setAlertMessage({ type: 'error', message: 'Data kategori kosong' }); // Menampilkan pesan error
-            } else {
-               setCategories(categories);
-            }
-            setLoading(false);
-         })
-         .catch((error) => {
-            setAlertMessage({ type: 'error', message: 'Terjadi kesalahan saat mengambil data' }); // Menampilkan pesan error
-            setLoading(false);
-         });
+      fetchCategories();
    }, []);
 
    const handlerDisabled = () => {
@@ -82,87 +91,74 @@ export default function ListCategoriesPage() {
          .replace(/-+$/, ''); // Hapus - di akhir
    };
 
-   const handlerSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault(); // Mencegah reload halaman
-      setIsLoading(true); // Set loading true
+   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsLoading(true);
 
-      // Validasi form
+      // Tambahkan delay sebelum mengirim data
+      await new Promise((resolve) => setTimeout(resolve, 1800)); // Delay 1 detik
+
       if (!name || !slug) {
          setErrors({
             name: !name ? 'Nama diperlukan' : '',
             slug: !slug ? 'Slug diperlukan' : '',
          });
-         setIsLoading(false); // Set loading false jika ada error
+         setIsLoading(false);
          return;
       }
 
-      // Kirim data ke backend
-      const response = await fetch('http://localhost:3001/api/v1/categories', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({ name, slug, description }),
-      });
+      try {
+         const response = await fetch('http://localhost:3001/api/v1/categories', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, slug, description }),
+         });
 
-      const result = await response.json();
+         const result = await response.json();
+         if (response.status !== 201) {
+            setAlertMessage({ type: 'error', message: result.message });
+            return;
+         }
 
-      // Cek jika ada error dari API
-      if (response.status !== 201) {
-         setAlertMessage({ type: 'error', message: result.message }); // Set alert error
-         setIsLoading(false); // Set loading false jika ada error
-         return;
+         setAlertMessage({ type: 'success', message: result.message });
+         resetForm();
+         fetchCategories(); // Ambil ulang data kategori setelah berhasil
+      } catch (error) {
+         setAlertMessage({ type: 'error', message: 'Terjadi kesalahan saat menyimpan data' });
+      } finally {
+         setIsLoading(false);
       }
+   };
 
-      setAlertMessage({ type: 'success', message: result.message }); // Set alert success
-
-      // Kosongkan form setelah berhasil
+   const resetForm = () => {
       setName('');
       setSlug('');
       setDescription('');
-
-      // Ambil ulang data kategori setelah berhasil
-      fetch('http://localhost:3001/api/v1/categories')
-         .then((res) => res.json())
-         .then((categories) => {
-            setCategories(categories);
-            setLoading(false); // Set loading false setelah selesai
-         });
-      setIsLoading(false); // Set loading false setelah selesai
+      setErrors({ name: '', slug: '' });
    };
 
    const handleDisabledOnClick = async (categoryId: number) => {
-      // Cek jumlah kategori yang aktif
       const activeCount = categories.data.filter((category) => category.flag === 'ACTIVED').length;
 
-      // Jika hanya ada satu kategori aktif, jangan izinkan untuk dinonaktifkan
       if (activeCount === 1 && categories.data.find((category) => category.id === categoryId)?.flag === 'ACTIVED') {
          setAlertMessage({ type: 'error', message: 'Tidak dapat menonaktifkan kategori aktif terakhir.' });
          return;
       }
 
-      const response = await fetch(`http://localhost:3001/api/v1/categories/${categoryId}`, {
-         method: 'PATCH',
-      });
-      const result = await response.json();
-
-      if (response.status !== 201 && response.status !== 200) {
-         // Perbaiki kondisi ini
-         setAlertMessage({ type: 'error', message: result.message });
-         setIsLoading(false);
-         return;
+      setLoading(true);
+      try {
+         await new Promise((resolve) => setTimeout(resolve, 1000));
+         const response = await fetch(`http://localhost:3001/api/v1/categories/${categoryId}`, { method: 'PATCH' });
+         const result = await response.json();
+         if (response.status !== 200) {
+            setAlertMessage({ type: 'error', message: result.message });
+            return;
+         }
+         setAlertMessage({ type: 'success', message: result.message });
+         fetchCategories(); // Ambil ulang data kategori setelah berhasil
+      } catch (error) {
+         setAlertMessage({ type: 'error', message: 'Terjadi kesalahan saat memperbarui kategori' });
       }
-
-      setAlertMessage({ type: 'success', message: result.message });
-
-      // Ambil ulang data kategori setelah berhasil
-      fetch('http://localhost:3001/api/v1/categories') // Pastikan ini mengambil semua kategori
-         .then((res) => res.json())
-         .then((categories) => {
-            setCategories(categories);
-            setLoading(false); // Set loading false setelah selesai
-         });
-      setIsLoading(false); // Set loading false setelah selesai
    };
 
    const handleUpdateFlag = async (categoryId: number) => {
@@ -181,7 +177,6 @@ export default function ListCategoriesPage() {
 
       setAlertMessage({ type: 'success', message: result.message }); // Set alert success
 
-      console.log();
       fetch('http://localhost:3001/api/v1/categories')
          .then((res) => res.json())
          .then((categories) => {
@@ -211,13 +206,17 @@ export default function ListCategoriesPage() {
 
    return (
       <section>
-         {alertMessage && ( // Tampilkan alert jika ada
-            <Alert type={alertMessage.type} message={alertMessage.message} />
+         {loading && (
+            <div className="fixed right-5 top-5">
+               <div className="flex w-full items-center justify-center">
+                  <span className="m-auto mb-10 mt-20 inline-block h-8 w-8 animate-[spin_1s_linear_infinite] rounded-full border-8 border-b-success border-l-primary border-r-warning border-t-danger align-middle"></span>
+               </div>
+            </div>
          )}
          <div className="mb-5 w-8/12 rounded-xl bg-white px-8 py-5 shadow-lg shadow-white-light dark:bg-black dark:shadow-black-dark-light">
             <h1 className="mb-3 text-xl font-bold">Data Kategori</h1>
 
-            <form onSubmit={handlerSubmitForm}>
+            <form onSubmit={handleFormSubmit}>
                <div className="grid grid-cols-2 gap-5">
                   <div>
                      <label htmlFor="name" className="text-sm font-semibold">
@@ -270,7 +269,7 @@ export default function ListCategoriesPage() {
                      ></textarea>
                   </div>
                   <button type="submit" className="btn btn-info hover:scale-95" disabled={isLoading}>
-                     {isLoading ? 'Menyimpan...' : 'Simpan'}
+                     {isLoading ? <IconCircle className="animate-ping" size={30} stroke={2} /> : <IconFileUpload size={30} stroke={2} />}
                   </button>
                </div>
             </form>
@@ -279,17 +278,13 @@ export default function ListCategoriesPage() {
          <div className="table-responsive mb-5 w-10/12 rounded-xl bg-white p-8 shadow-lg shadow-white-light dark:bg-black dark:shadow-black-dark-light">
             {!categories && <h1>DATA MASIH KOSONG!</h1>}
 
-            {loading && (
-               <div className="flex w-full items-center justify-center">
-                  <span className="m-auto mb-10 mt-20 inline-block h-14 w-14 animate-[spin_1s_linear_infinite] rounded-full border-8 border-b-success border-l-primary border-r-warning border-t-danger align-middle"></span>
-               </div>
-            )}
             <table>
                <thead>
                   <tr>
                      <th>Name</th>
                      <th className="text-center">Status</th>
                      <th className="text-center">Action</th>
+                     <th className=""></th>
                   </tr>
                </thead>
                <tbody>
@@ -310,14 +305,14 @@ export default function ListCategoriesPage() {
                                       {data.flag === 'ACTIVED' ? 'Aktif' : 'Favorit'}
                                    </div>
                                 </td>
-                                <td className="flex items-start justify-center gap-2 text-center">
+                                <td className="flex items-center justify-center gap-2 text-center">
                                    <form
                                       onSubmit={(e) => {
                                          e.preventDefault();
                                          handleUpdateFlag(data.id);
                                       }}
                                    >
-                                      <button type="submit">
+                                      <button type="submit" className="mt-1">
                                          {data.flag === 'FAVOURITE' ? (
                                             <IconStarFilled className="text-yellow-500 " size={20} stroke={2} />
                                          ) : (
@@ -326,24 +321,19 @@ export default function ListCategoriesPage() {
                                       </button>
                                    </form>
 
-                                   <form
-                                      onClick={(e) => {
-                                         e.preventDefault();
-                                         handleDisabledOnClick(data.id);
-                                      }}
-                                   >
-                                      <label className="relative h-6 w-12">
-                                         <input
-                                            type="checkbox"
-                                            className="custom_switch peer absolute z-10 h-full w-full cursor-pointer opacity-0"
-                                            id="custom_switch_checkbox4"
-                                         />
-                                         <span className="block h-full rounded-full bg-primary before:absolute before:bottom-1 before:right-1 before:h-4 before:w-4 before:rounded-full before:bg-white before:transition-all before:duration-300 peer-checked:bg-[#ebedf2] peer-checked:before:right-7 dark:bg-dark dark:before:bg-white-dark dark:peer-checked:before:bg-white"></span>
-                                      </label>
-                                   </form>
-
+                                   {loading === true ? (
+                                      <button type="button" onClick={() => handleDisabledOnClick(data.id)} disabled>
+                                         <IconLoader className="animate-spin" size={20} stroke={2} />
+                                      </button>
+                                   ) : (
+                                      <button type="button" onClick={() => handleDisabledOnClick(data.id)}>
+                                         <IconEyeMinus size={20} stroke={2} />
+                                      </button>
+                                   )}
+                                </td>
+                                <td className="ml-auto text-end">
                                    <Link href={`/panel/admin/categories/${data.id}`}>
-                                      <IconArrowBigRightLine className="mt-0.5 text-teal-500" size={20} stroke={2} />
+                                      <IconArrowBigRightLine className="text-teal-500 " size={20} stroke={2} />
                                    </Link>
                                 </td>
                              </tr>
