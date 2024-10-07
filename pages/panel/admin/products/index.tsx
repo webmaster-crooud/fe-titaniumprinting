@@ -27,7 +27,6 @@ export default function ProductsPage() {
       data: [{ barcode: '', name: '', category: { name: '' }, flag: '', createdAt: '', updatedAt: '' }],
    });
    const [loading, setLoading] = useState(false);
-   const [alert, setAlert] = useState<{ type: string; message: string } | null>(null);
 
    const fetchProducts = async () => {
       setLoading(true);
@@ -156,11 +155,11 @@ export default function ProductsPage() {
                      <tr>
                         <td colSpan={5}>
                            <div className="grid w-full animate-pulse grid-rows-4 gap-5 rounded-lg bg-white-light p-5 dark:bg-slate-800">
-                              <div className="h-5 w-full animate-pulse rounded-md bg-white-light dark:bg-slate-500"></div>
-                              <div className="h-5 w-full animate-pulse rounded-md bg-white-light dark:bg-slate-500"></div>
-                              <div className="h-5 w-full animate-pulse rounded-md bg-white-light dark:bg-slate-500"></div>
-                              <div className="h-5 w-full animate-pulse rounded-md bg-white-light dark:bg-slate-500"></div>
-                              <div className="h-5 w-full animate-pulse rounded-md bg-white-light dark:bg-slate-500"></div>
+                              <div className="h-5 w-full animate-pulse rounded-md bg-white-dark dark:bg-slate-500"></div>
+                              <div className="h-5 w-full animate-pulse rounded-md bg-white-dark dark:bg-slate-500"></div>
+                              <div className="h-5 w-full animate-pulse rounded-md bg-white-dark dark:bg-slate-500"></div>
+                              <div className="h-5 w-full animate-pulse rounded-md bg-white-dark dark:bg-slate-500"></div>
+                              <div className="h-5 w-full animate-pulse rounded-md bg-white-dark dark:bg-slate-500"></div>
                            </div>
                         </td>
                      </tr>
