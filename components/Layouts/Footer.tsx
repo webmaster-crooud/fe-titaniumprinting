@@ -1,7 +1,9 @@
 const Footer = () => {
-    return (
-            <div className="p-6 pt-0 mt-auto text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">© {new Date().getFullYear()}. Vristo All rights reserved.</div>
-    );
+   return (
+      <div className="mt-auto p-6 pt-0 text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">
+         © {new Date().getFullYear()}. Crooud Agency.
+      </div>
+   );
 };
 
 export default Footer;
