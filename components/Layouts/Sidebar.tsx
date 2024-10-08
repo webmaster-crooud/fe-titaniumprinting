@@ -152,29 +152,29 @@ const Sidebar = () => {
                      <li className="menu nav-item">
                         <button
                            type="button"
-                           className={`${currentMenu === 'panel/admin/products' ? 'active' : ''} nav-link group w-full`}
-                           onClick={() => toggleMenu('panel/admin/products')}
+                           className={`${currentMenu === 'admin/products' ? 'active' : ''} nav-link group w-full`}
+                           onClick={() => toggleMenu('admin/products')}
                         >
                            <div className="flex items-center">
                               <IconMenuComponents className="shrink-0 group-hover:!text-primary" />
                               <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Produk'}</span>
                            </div>
 
-                           <div className={currentMenu !== 'panel/admin/products' ? '-rotate-90 rtl:rotate-90' : ''}>
+                           <div className={currentMenu !== 'admin/products' ? '-rotate-90 rtl:rotate-90' : ''}>
                               <IconCaretDown />
                            </div>
                         </button>
 
-                        <AnimateHeight duration={300} height={currentMenu === 'panel/admin/products' ? 'auto' : 0}>
+                        <AnimateHeight duration={300} height={currentMenu === 'admin/products' ? 'auto' : 0}>
                            <ul className="sub-menu text-gray-500">
                               <li>
-                                 <Link href="/panel/admin/products">{'List Produk'}</Link>
+                                 <Link href="/admin/products">{'List Produk'}</Link>
                               </li>
                               <li>
-                                 <Link href="/panel/admin/products/create">{'Tambah Produk'}</Link>
+                                 <Link href="/admin/products/create">{'Tambah Produk'}</Link>
                               </li>
                               <li>
-                                 <Link href="/panel/admin/products/disabled">{'List Produk Disable'}</Link>
+                                 <Link href="/admin/products/disabled">{'List Produk Disable'}</Link>
                               </li>
                            </ul>
                         </AnimateHeight>
@@ -184,29 +184,29 @@ const Sidebar = () => {
                      <li className="menu nav-item">
                         <button
                            type="button"
-                           className={`${currentMenu === 'panel/admin/components' ? 'active' : ''} nav-link group w-full`}
-                           onClick={() => toggleMenu('panel/admin/components')}
+                           className={`${currentMenu === 'admin/components' ? 'active' : ''} nav-link group w-full`}
+                           onClick={() => toggleMenu('admin/components')}
                         >
                            <div className="flex items-center">
                               <IconMenuDatatables className="shrink-0 group-hover:!text-primary" />
                               <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Komponen'}</span>
                            </div>
 
-                           <div className={currentMenu !== 'panel/admin/components' ? '-rotate-90 rtl:rotate-90' : ''}>
+                           <div className={currentMenu !== 'admin/components' ? '-rotate-90 rtl:rotate-90' : ''}>
                               <IconCaretDown />
                            </div>
                         </button>
 
-                        <AnimateHeight duration={300} height={currentMenu === 'panel/admin/components' ? 'auto' : 0}>
+                        <AnimateHeight duration={300} height={currentMenu === 'admin/components' ? 'auto' : 0}>
                            <ul className="sub-menu text-gray-500">
                               <li>
-                                 <Link href="/panel/admin/components">{'Komponen Material'}</Link>
+                                 <Link href="/admin/components">{'Komponen Material'}</Link>
                               </li>
                               <li>
-                                 <Link href="/panel/admin/components/create">{'Kalitas Material'}</Link>
+                                 <Link href="/admin/components/create">{'Kalitas Material'}</Link>
                               </li>
                               <li>
-                                 <Link href="/panel/admin/components/disabled">{'Ukuran'}</Link>
+                                 <Link href="/admin/components/disabled">{'Ukuran'}</Link>
                               </li>
                            </ul>
                         </AnimateHeight>
@@ -216,26 +216,26 @@ const Sidebar = () => {
                      <li className="menu nav-item">
                         <button
                            type="button"
-                           className={`${currentMenu === 'panel/admin/categories' ? 'active' : ''} nav-link group w-full`}
-                           onClick={() => toggleMenu('panel/admin/categories')}
+                           className={`${currentMenu === 'admin/categories' ? 'active' : ''} nav-link group w-full`}
+                           onClick={() => toggleMenu('admin/categories')}
                         >
                            <div className="flex items-center">
                               <IconMenuScrumboard className="shrink-0 group-hover:!text-primary" />
                               <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Kategori'}</span>
                            </div>
 
-                           <div className={currentMenu !== 'panel/admin/categories' ? '-rotate-90 rtl:rotate-90' : ''}>
+                           <div className={currentMenu !== 'admin/categories' ? '-rotate-90 rtl:rotate-90' : ''}>
                               <IconCaretDown />
                            </div>
                         </button>
 
-                        <AnimateHeight duration={300} height={currentMenu === 'panel/admin/categories' ? 'auto' : 0}>
+                        <AnimateHeight duration={300} height={currentMenu === 'admin/categories' ? 'auto' : 0}>
                            <ul className="sub-menu text-gray-500">
                               <li>
-                                 <Link href="/panel/admin/categories">{'List Kategori'}</Link>
+                                 <Link href="/admin/categories">{'List Kategori'}</Link>
                               </li>
                               <li>
-                                 <Link href="/panel/admin/categories/disabled">{'List Kategori Disable'}</Link>
+                                 <Link href="/admin/categories/disabled">{'List Kategori Disable'}</Link>
                               </li>
                            </ul>
                         </AnimateHeight>

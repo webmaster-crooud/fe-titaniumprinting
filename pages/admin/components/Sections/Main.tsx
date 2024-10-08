@@ -1,37 +1,66 @@
 import { Card } from '@/components/Card';
 import { InputForm } from '@/components/Form/input.form';
-import CurrencyInput from 'react-currency-input-field';
-import { MultiValue, ActionMeta, Props as SelectProps } from 'react-select';
+
 import ImageUploading from 'react-images-uploading';
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 
-export const MainSectionWizardComponent = () => {
-   const [image, setImage] = useState<File[]>([]);
+import { Props as SelectProps } from 'react-select';
+import dynamic from 'next/dynamic';
+import { Option } from '../create';
+
+interface HandlerOption {
+   onChangeName: any;
+   onChangeTypeComponent: any;
+   onChangeImage: any;
+   valueName: any;
+   valueTypeComponent: any;
+   valueImage: any;
+}
+
+const options = [
+   { value: 'MATERIAL', label: 'Material' },
+   { value: 'ADDON', label: 'Addon' },
+   { value: 'FINISHING', label: 'Finishing' },
+   { value: 'PROCESSING', label: 'Processing' },
+   { value: 'CONSUMING', label: 'Consuming' },
+];
+
+const Select = dynamic<SelectProps<Option, true>>(() => import('react-select'), {
+   ssr: false,
+}) as React.ComponentType<SelectProps<Option, true>>;
+export const MainSectionWizardComponent: React.FC<HandlerOption> = ({
+   onChangeName,
+   valueName,
+   valueTypeComponent,
+   onChangeTypeComponent,
+   valueImage,
+   onChangeImage,
+}) => {
    const maxNumber = 69;
-   const onChangeImage = (imageList: any, addUpdateIndex: any) => {
-      setImage(imageList);
-   };
+
    return (
       <Card width={10} mxAuto="mx-auto">
          <div className="flex w-full items-center justify-center gap-5">
-            <InputForm label="Nama Komponen*" name="name" isRequired type="text" placeholder="Nama Komponen Material" />
+            <InputForm
+               label="Nama Komponen*"
+               value={valueName}
+               onChange={onChangeName}
+               name="name"
+               isRequired
+               type="text"
+               placeholder="Nama Komponen Material"
+            />
             <div className="w-full">
-               <label htmlFor="type_component">Tipe Komponen*</label>
-               <select name="type_component" className="form-input" required>
-                  <option value="MATERIAL">Material</option>
-                  <option value="ADDON">Addon</option>
-                  <option value="FINISHING">Finishing</option>
-                  <option value="PROCESSING">Processing</option>
-                  <option value="CONSUMING">Consuming</option>
-               </select>
+               <label htmlFor="typeComponent">Tipe Komponen*</label>
+               <Select defaultValue={valueTypeComponent} options={options} isSearchable={false} onChange={onChangeTypeComponent} />
             </div>
          </div>
 
          <div className="mt-5">
             <label htmlFor="">Image</label>
-            <ImageUploading multiple value={image} onChange={onChangeImage} maxNumber={maxNumber} dataURLKey="data_url">
+            <ImageUploading multiple value={valueImage} onChange={onChangeImage} maxNumber={maxNumber} dataURLKey="data_url">
                {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
                   <div className="w-full rounded-lg border border-slate-200 p-5">
                      <button

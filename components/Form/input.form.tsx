@@ -1,16 +1,16 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 interface propsInputForm {
    label: string;
    type?: string;
-   value?: string | number;
+   value?: string | number | undefined;
    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
    placeholder: string;
    name: string;
    isRequired?: boolean;
 }
 
-export const InputForm: React.FC<propsInputForm> = ({ label, type = 'text', placeholder, name, isRequired = false, value, onChange }) => {
+export const InputForm: React.FC<propsInputForm> = ({ label, type = 'text', placeholder, name, isRequired = false, value = undefined, onChange }) => {
    return (
       <div className="w-full">
          <label htmlFor="name" className="text-sm font-semibold">

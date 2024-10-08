@@ -1,11 +1,11 @@
 'use client';
+import { showAlert } from '@/components/Alert';
 import { CreateButton } from '@/components/Button/Create.button';
 import IconHome from '@/components/Icon/IconHome';
 import { IconDetails, IconEye, IconFilePlus, IconHome2, IconPlus, IconRocket, IconSearch, IconStar, IconTrash } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 
 type propsProducts = {
    data: [
@@ -48,51 +48,7 @@ export default function ProductsPage() {
          setLoading(false);
       }
    };
-   const showAlert = async (type: string | undefined, message: string) => {
-      if (type === 'success') {
-         const toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2500,
-            width: '35%',
-            background: 'rgba(67,97,238,1)',
-         });
-         toast.fire({
-            icon: 'success',
-            title: message,
-            padding: '10px 20px',
-         });
-      } else if (type === 'warning') {
-         const toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2500,
-            width: '35%',
-            backdrop: '#eab308',
-         });
-         toast.fire({
-            icon: 'warning',
-            title: message,
-            padding: '10px 20px',
-         });
-      } else {
-         const toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2500,
-            width: '35%',
-            background: '#e7515a',
-         });
-         toast.fire({
-            icon: 'error',
-            title: message,
-            padding: '10px 20px',
-         });
-      }
-   };
+
    useEffect(() => {
       fetchProducts();
    }, []);

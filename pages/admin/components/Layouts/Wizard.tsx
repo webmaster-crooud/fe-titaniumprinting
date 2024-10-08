@@ -1,10 +1,43 @@
 import { IconComponents, IconPackageExport, IconReceipt2 } from '@tabler/icons-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MainSectionWizardComponent } from '../Sections/Main';
 import { StockSectionWizardComponent } from '../Sections/Stock';
 import { PricingSectionWizardComponent } from '../Sections/Pricing';
 
-export const Wizard = () => {
+interface HandlerOption {
+   onChangeName: any;
+   onChangeTypeComponent: any;
+   onChangeImage: any;
+   onChangeTypePieces: any;
+   onChangeQtyPieces: any;
+   onChangePrice: any;
+   onChangeCogs: any;
+   valueName: any;
+   valueTypeComponent: any;
+   valueImage: any;
+   valueTypePieces: any;
+   valueQtyPieces: any;
+   onClickSubmit: any;
+   onClickSubmitToQuality: any;
+   loading: any;
+}
+export const Wizard: React.FC<HandlerOption> = ({
+   onChangeName,
+   onChangeImage,
+   onChangeTypeComponent,
+   onChangeTypePieces,
+   onChangeQtyPieces,
+   onChangePrice,
+   onChangeCogs,
+   valueName,
+   valueImage,
+   valueTypeComponent,
+   valueTypePieces,
+   valueQtyPieces,
+   onClickSubmit,
+   onClickSubmitToQuality,
+   loading,
+}) => {
    const [activeTab3, setActiveTab3] = useState<any>(1);
    return (
       <div className="inline-block w-full">
@@ -47,11 +80,43 @@ export const Wizard = () => {
             </ul>
          </div>
          <div>
-            <section className="mb-5">{activeTab3 === 1 && <MainSectionWizardComponent />}</section>
+            <section className="mb-5">
+               {activeTab3 === 1 && (
+                  <MainSectionWizardComponent
+                     onChangeName={onChangeName}
+                     valueName={valueName}
+                     onChangeTypeComponent={onChangeTypeComponent}
+                     valueTypeComponent={valueTypeComponent}
+                     onChangeImage={onChangeImage}
+                     valueImage={valueImage}
+                  />
+               )}
+            </section>
 
-            <section className="mb-5">{activeTab3 === 2 && <StockSectionWizardComponent />}</section>
+            <section className="mb-5">
+               {activeTab3 === 2 && (
+                  <StockSectionWizardComponent
+                     valueTypePieces={valueTypePieces}
+                     onChangeTypePieces={onChangeTypePieces}
+                     valueQtyPieces={valueQtyPieces}
+                     onChangeQtyPieces={onChangeQtyPieces}
+                     setActiveTab={setActiveTab3}
+                     activeTab={activeTab3}
+                  />
+               )}
+            </section>
 
-            <section className="mb-5">{activeTab3 === 3 && <PricingSectionWizardComponent />}</section>
+            <section className="mb-5">
+               {activeTab3 === 3 && (
+                  <PricingSectionWizardComponent
+                     onChangePrice={onChangePrice}
+                     onChangeCogs={onChangeCogs}
+                     onClickSubmit={onClickSubmit}
+                     onClickSubmitToQuality={onClickSubmitToQuality}
+                     loading={loading}
+                  />
+               )}
+            </section>
          </div>
          <div className="flex justify-between">
             <button

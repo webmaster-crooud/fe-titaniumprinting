@@ -27,7 +27,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
    const getLayout =
       Component.getLayout ??
       ((page) => {
-         if (router.pathname.startsWith('/panel/')) {
+         if (router.pathname.startsWith('/admin') || router.pathname.startsWith('/member')) {
             return <DefaultLayout>{page}</DefaultLayout>;
          } else {
             return <BlankLayout>{page}</BlankLayout>;
