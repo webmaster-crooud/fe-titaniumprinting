@@ -184,29 +184,29 @@ const Sidebar = () => {
                      <li className="menu nav-item">
                         <button
                            type="button"
-                           className={`${currentMenu === 'components' ? 'active' : ''} nav-link group w-full`}
-                           onClick={() => toggleMenu('components')}
+                           className={`${currentMenu === 'panel/admin/components' ? 'active' : ''} nav-link group w-full`}
+                           onClick={() => toggleMenu('panel/admin/components')}
                         >
                            <div className="flex items-center">
                               <IconMenuDatatables className="shrink-0 group-hover:!text-primary" />
                               <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">{'Komponen'}</span>
                            </div>
 
-                           <div className={currentMenu !== 'components' ? '-rotate-90 rtl:rotate-90' : ''}>
+                           <div className={currentMenu !== 'panel/admin/components' ? '-rotate-90 rtl:rotate-90' : ''}>
                               <IconCaretDown />
                            </div>
                         </button>
 
-                        <AnimateHeight duration={300} height={currentMenu === 'components' ? 'auto' : 0}>
+                        <AnimateHeight duration={300} height={currentMenu === 'panel/admin/components' ? 'auto' : 0}>
                            <ul className="sub-menu text-gray-500">
                               <li>
-                                 <Link href="/components">{'List Material'}</Link>
+                                 <Link href="/panel/admin/components">{'Komponen Material'}</Link>
                               </li>
                               <li>
-                                 <Link href="/components/create">{'Kalitas Material'}</Link>
+                                 <Link href="/panel/admin/components/create">{'Kalitas Material'}</Link>
                               </li>
                               <li>
-                                 <Link href="/components/disabled">{'Ukuran'}</Link>
+                                 <Link href="/panel/admin/components/disabled">{'Ukuran'}</Link>
                               </li>
                            </ul>
                         </AnimateHeight>

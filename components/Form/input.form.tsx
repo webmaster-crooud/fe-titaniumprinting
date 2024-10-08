@@ -12,7 +12,7 @@ interface propsInputForm {
 
 export const InputForm: React.FC<propsInputForm> = ({ label, type = 'text', placeholder, name, isRequired = false, value, onChange }) => {
    return (
-      <div>
+      <div className="w-full">
          <label htmlFor="name" className="text-sm font-semibold">
             {label}
          </label>
