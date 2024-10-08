@@ -1,12 +1,13 @@
-const Index = () => {
+import BlankLayout from '@/components/Layouts/BlankLayout';
 
-    return (
-        <>
-            <div>
-                <h1>starter page</h1>
-            </div>
-        </>
-    );
+const Index = () => {
+   return (
+      <BlankLayout>
+         <div>
+            <h1>starter page heleh</h1>
+         </div>
+      </BlankLayout>
+   );
 };
 
 export default Index;

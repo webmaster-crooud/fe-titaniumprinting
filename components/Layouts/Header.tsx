@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IRootState } from '../../store';
 import { toggleTheme, toggleSidebar } from '../../store/themeConfigSlice';
-import { useTranslation } from 'react-i18next';
 import Dropdown from '../Dropdown';
 import IconMenu from '@/components/Icon/IconMenu';
-import IconCalendar from '@/components/Icon/IconCalendar';
-import IconEdit from '@/components/Icon/IconEdit';
-import IconChatNotification from '@/components/Icon/IconChatNotification';
-import IconSearch from '@/components/Icon/IconSearch';
 import IconXCircle from '@/components/Icon/IconXCircle';
 import IconSun from '@/components/Icon/IconSun';
 import IconMoon from '@/components/Icon/IconMoon';
@@ -133,10 +129,6 @@ const Header = () => {
     const removeNotification = (value: number) => {
         setNotifications(notifications.filter((user) => user.id !== value));
     };
-
-    const [search, setSearch] = useState(false);
-
-    const { t, i18n } = useTranslation();
 
     return (
         <header className={`z-40 ${themeConfig.semidark && themeConfig.menu === 'horizontal' ? 'dark' : ''}`}>
@@ -382,7 +374,7 @@ const Header = () => {
                         <button type="button" className="nav-link">
                             <div className="flex items-center">
                                 <IconMenuDashboard className="shrink-0" />
-                                <span className="px-1">{t('dashboard')}</span>
+                                <span className="px-1">{'dashboard'}</span>
                             </div>
                             <div className="right_arrow">
                                 <IconCaretDown />
@@ -390,16 +382,16 @@ const Header = () => {
                         </button>
                         <ul className="sub-menu">
                             <li>
-                                <Link href="/">{t('sales')}</Link>
+                                <Link href="/">{'sales'}</Link>
                             </li>
                             <li>
-                                <Link href="/analytics">{t('analytics')}</Link>
+                                <Link href="/analytics">{'analytics'}</Link>
                             </li>
                             <li>
-                                <Link href="/finance">{t('finance')}</Link>
+                                <Link href="/finance">{'finance'}</Link>
                             </li>
                             <li>
-                                <Link href="/crypto">{t('crypto')}</Link>
+                                <Link href="/crypto">{'crypto'}</Link>
                             </li>
                         </ul>
                     </li>
@@ -407,7 +399,7 @@ const Header = () => {
                         <button type="button" className="nav-link">
                             <div className="flex items-center">
                                 <IconMenuApps className="shrink-0" />
-                                <span className="px-1">{t('apps')}</span>
+                                <span className="px-1">{'apps'}</span>
                             </div>
                             <div className="right_arrow">
                                 <IconCaretDown />
@@ -415,47 +407,47 @@ const Header = () => {
                         </button>
                         <ul className="sub-menu">
                             <li>
-                                <Link href="/apps/chat">{t('chat')}</Link>
+                                <Link href="/apps/chat">{'chat'}</Link>
                             </li>
                             <li>
-                                <Link href="/apps/mailbox">{t('mailbox')}</Link>
+                                <Link href="/apps/mailbox">{'mailbox'}</Link>
                             </li>
                             <li>
-                                <Link href="/apps/todolist">{t('todo_list')}</Link>
+                                <Link href="/apps/todolist">{'todo_list'}</Link>
                             </li>
                             <li>
-                                <Link href="/apps/notes">{t('notes')}</Link>
+                                <Link href="/apps/notes">{'notes'}</Link>
                             </li>
                             <li>
-                                <Link href="/apps/scrumboard">{t('scrumboard')}</Link>
+                                <Link href="/apps/scrumboard">{'scrumboard'}</Link>
                             </li>
                             <li>
-                                <Link href="/apps/contacts">{t('contacts')}</Link>
+                                <Link href="/apps/contacts">{'contacts'}</Link>
                             </li>
                             <li className="relative">
                                 <button type="button">
-                                    {t('invoice')}
+                                    {'invoice'}
                                     <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
                                         <IconCaretDown />
                                     </div>
                                 </button>
                                 <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow dark:bg-[#1b2e4b] dark:text-white-dark ltr:left-[95%] rtl:right-[95%]">
                                     <li>
-                                        <Link href="/apps/invoice/list">{t('list')}</Link>
+                                        <Link href="/apps/invoice/list">{'list'}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/apps/invoice/preview">{t('preview')}</Link>
+                                        <Link href="/apps/invoice/preview">{'preview'}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/apps/invoice/add">{t('add')}</Link>
+                                        <Link href="/apps/invoice/add">{'add'}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/apps/invoice/edit">{t('edit')}</Link>
+                                        <Link href="/apps/invoice/edit">{'edit'}</Link>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <Link href="/apps/calendar">{t('calendar')}</Link>
+                                <Link href="/apps/calendar">{'calendar'}</Link>
                             </li>
                         </ul>
                     </li>
