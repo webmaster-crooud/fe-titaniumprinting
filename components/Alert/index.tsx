@@ -22,7 +22,7 @@ export const showAlert = async (type: string | undefined, message: string) => {
          showConfirmButton: false,
          timer: 2500,
          width: '40%',
-         backdrop: '#eab308',
+         background: '#eab308',
       });
       toast.fire({
          icon: 'warning',

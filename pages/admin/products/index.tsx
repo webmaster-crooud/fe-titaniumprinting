@@ -57,14 +57,14 @@ export default function ProductsPage() {
       <section className="relative">
          <ol className="mb-3 flex border-b border-gray-500/30 pb-1 font-semibold text-gray-500 dark:border-white-dark/30 dark:text-white-dark">
             <li>
-               <a href="javascript:;" className="hover:text-gray-500/70 dark:hover:text-white-dark/70">
+               <Link href="/admin" className="hover:text-gray-500/70 dark:hover:text-white-dark/70">
                   <IconHome2 size={18} stroke={2.5} />
-               </a>
+               </Link>
             </li>
             <li className="before:px-1.5 before:content-['/']">
-               <a href="javascript:;" className="text-black hover:text-black/70 dark:text-white-light dark:hover:text-white-light/70">
+               <Link href="/admin/products" className="text-black hover:text-black/70 dark:text-white-light dark:hover:text-white-light/70">
                   Produk
-               </a>
+               </Link>
             </li>
          </ol>
 
@@ -76,7 +76,7 @@ export default function ProductsPage() {
          </div>
          <div className="table-responsive rounded-lg bg-white p-5 pb-8 shadow-lg dark:bg-black">
             <div className="mb-3 flex w-full items-center justify-between">
-               <CreateButton text="Produk" url="/products/create" />
+               <CreateButton text="Produk" url="products/create" />
                <form>
                   <div className="relative flex rounded-lg border border-white-dark/20">
                      <button
@@ -147,9 +147,9 @@ export default function ProductsPage() {
                               </div>
                            </td>
                            {data.createdAt != data.updatedAt ? (
-                              <td className="text-end">{dayjs(data.updatedAt).format('MMMM, D YYYY HH:mm:ss')} (updated)</td>
+                              <td className="text-end">{dayjs(data.updatedAt).locale('id').format('MMMM, D YYYY')}</td>
                            ) : (
-                              <td className="text-end">{dayjs(data.createdAt).format('MMMM, D YYYY HH:mm:ss')}</td>
+                              <td className="text-end">{dayjs(data.createdAt).locale('id').format('MMMM, D YYYY')}</td>
                            )}
                         </tr>
                      ))
