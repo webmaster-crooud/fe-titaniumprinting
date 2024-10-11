@@ -89,7 +89,41 @@ const CreateComponentsPage = () => {
       }
    };
 
-   const handlerSubmitComponentsToQuality = () => {};
+   const handlerSubmitComponentsToQuality = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1800));
+
+      try {
+         const response = await fetch('http://localhost:3001/api/v1/components', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+               name,
+               typeComponent,
+               typePieces,
+               qtyPieces,
+               price,
+               cogs,
+            }),
+         });
+
+         const result = await response.json();
+         if (response.status !== 201) {
+            showAlert('error', result.message);
+            return;
+         }
+
+         resetForm();
+         router.push(`/admin/qualities/create/${result.data.id}`);
+         showAlert('success', result.message);
+      } catch (error) {
+         showAlert('error', 'Terjadi kesalahan');
+      } finally {
+         setLoading(false);
+      }
+   };
 
    const resetForm = () => {
       setName('');

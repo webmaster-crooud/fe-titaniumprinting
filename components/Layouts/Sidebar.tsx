@@ -85,7 +85,7 @@ const Sidebar = () => {
          >
             <div className="h-full bg-white dark:bg-black">
                <div className="flex items-center justify-between px-4 py-3">
-                  <Link href="/" className="main-logo flex shrink-0 items-center">
+                  <Link href="/" className="main-logo flex shrink-0 items-center" as={'image'}>
                      <Image
                         className="ml-[5px] flex-none"
                         style={{ width: 'auto', height: 'auto' }}
@@ -95,7 +95,7 @@ const Sidebar = () => {
                         height={100}
                      />
                      <span className="sr-only align-middle text-2xl font-semibold dark:text-white-light lg:inline ltr:ml-1.5 rtl:mr-1.5">
-                        {'VRISTO'}
+                        {'Titanium Printing'}
                      </span>
                   </Link>
 
@@ -203,10 +203,10 @@ const Sidebar = () => {
                                  <Link href="/admin/components">{'List Komponen'}</Link>
                               </li>
                               <li>
-                                 <Link href="/admin/components/create">{'Kalitas Material'}</Link>
+                                 <Link href="/admin/components/disabled">{'Disabled Komponen'}</Link>
                               </li>
                               <li>
-                                 <Link href="/admin/components/disabled">{'Ukuran'}</Link>
+                                 <Link href="/admin/components/create">{'Tambah Komponen'}</Link>
                               </li>
                            </ul>
                         </AnimateHeight>

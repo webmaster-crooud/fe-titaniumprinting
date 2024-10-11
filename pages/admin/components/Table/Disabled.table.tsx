@@ -7,6 +7,7 @@ import {
    IconActivity,
    IconArrowRightToArc,
    IconCalendar,
+   IconCapture,
    IconCaptureOff,
    IconLoadBalancer,
    IconLoaderQuarter,
@@ -16,8 +17,7 @@ import {
 import dayjs from 'dayjs';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { DeleteComponentModal } from '../Modal';
 
 interface DataComponent {
    data: [
@@ -33,17 +33,16 @@ interface DataComponent {
    ];
 }
 
-export const ComponentsTable = () => {
+export const DisabledComponentsTable = () => {
    const [loading, setLoading] = useState(false);
    const [loadingDisabled, setLoadingDisabled] = useState(false);
    const [components, setComponents] = useState<DataComponent | null>(null);
-   const { pathname } = useRouter();
 
    const fetchComponents = async () => {
       setLoading(true);
       try {
          await new Promise((resolve) => setTimeout(resolve, 1500));
-         const response = await fetch(`${BACKEND_URL}/components`);
+         const response = await fetch(`${BACKEND_URL}/components/disabled`);
          const result = await response.json();
 
          if (result.error === true) {
@@ -51,6 +50,7 @@ export const ComponentsTable = () => {
             setComponents(null);
          } else {
             setComponents(result);
+            setLoading(false);
          }
       } catch (error) {
          showAlert('error', 'Terjadi kesalahan');
@@ -63,7 +63,7 @@ export const ComponentsTable = () => {
       fetchComponents();
    }, []);
 
-   const handlerDisabledComponets = async (componentId: string, flag: string) => {
+   const handlerActivedComponets = async (componentId: string, flag: string) => {
       setLoadingDisabled(true);
       try {
          await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -102,7 +102,6 @@ export const ComponentsTable = () => {
    return (
       <>
          <div className="mb-3 flex w-full items-center justify-between">
-            <CreateButton text="Komponen" url="components/create" />
             <form>
                <div className="relative flex rounded-lg border border-white-dark/20">
                   <button type="submit" placeholder="Cari Komponen" className="m-auto flex items-center justify-center p-3 text-primary">
@@ -149,22 +148,18 @@ export const ComponentsTable = () => {
                         <td>{component.name}</td>
                         <td>{!component.price ? 0 : formatCurrency(component.price)},-</td>
                         <td>{!component.cogs ? 0 : formatCurrency(component.cogs)},-</td>
-                        <td className="bg-danger-dark-light">
+                        <td className="bg-info-dark-light">
                            <div className="flex items-center justify-center gap-2">
-                              <Tippy content="Disabled">
-                                 {loadingDisabled ? (
-                                    <IconLoaderQuarter className="animate-spin" size={20} stroke={2} />
-                                 ) : (
-                                    <button type="button" onClick={() => handlerDisabledComponets(component.id, component.flag)}>
-                                       <IconCaptureOff className="text-danger" size={20} stroke={2} />
-                                    </button>
-                                 )}
+                              <Tippy content="Aktifasi">
+                                 <button type="button" onClick={() => handlerActivedComponets(component.id, component.flag)}>
+                                    {loadingDisabled ? (
+                                       <IconLoaderQuarter className="animate-spin" size={20} stroke={2} />
+                                    ) : (
+                                       <IconCapture className="text-info" size={20} stroke={2} />
+                                    )}
+                                 </button>
                               </Tippy>
-                              <Tippy content="Selengkapnya">
-                                 <Link href={`${pathname}/${component.id}`} type="button">
-                                    <IconArrowRightToArc className="text-info" size={20} stroke={2} />
-                                 </Link>
-                              </Tippy>
+                              <DeleteComponentModal component={fetchComponents} componentId={component.id} name={component.name} />
                            </div>
                         </td>
                         {component.createdAt != component.updatedAt ? (

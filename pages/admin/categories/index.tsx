@@ -332,7 +332,7 @@ export default function ListCategoriesPage() {
                                    )}
                                 </td>
                                 <td className="ml-auto text-end">
-                                   <Link href={`/panel/admin/categories/${data.id}`}>
+                                   <Link href={`/admin/categories/${data.id}`}>
                                       <IconArrowBigRightLine className="text-teal-500 " size={20} stroke={2} />
                                    </Link>
                                 </td>
