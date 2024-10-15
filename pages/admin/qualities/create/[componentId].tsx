@@ -16,15 +16,24 @@ import { SizeForm } from './Form/Size.form';
 import IconSave from '@/components/Icon/IconSave';
 import { ModalUploadedQualities } from '../Modal';
 
+// Tambahkan definisi tipe DataSize jika belum ada
+type DataSize = {
+   // Definisikan properti yang sesuai dengan struktur DataSize Anda
+   // Contoh:
+   // size: string;
+   // price: number;
+};
+
 export default function CreateQualityAndSizePage() {
    const router = useRouter();
    const { componentId } = router.query;
    const [componentName, setComponentName] = useState('');
    const [name, setName] = useState('');
    const [orientation, setOrientation] = useState(false);
-   const [sizes, setSizes] = useState<[] | null>(null);
+   const [sizes, setSizes] = useState<DataSize[] | null>(null);
    const [loading, setLoading] = useState(false);
    const [modal, setModal] = useState(false);
+   const [resetForm, setResetForm] = useState(false);
 
    const [image, setImage] = useState<File[]>([]);
    const maxNumber = 69;
@@ -55,7 +64,7 @@ export default function CreateQualityAndSizePage() {
       fetchComponentName();
    }, [componentId, router]);
 
-   const handlerGetSizes = (inputs: []) => {
+   const handlerGetSizes = (inputs: DataSize[]) => {
       setSizes(inputs);
    };
 
@@ -70,21 +79,20 @@ export default function CreateQualityAndSizePage() {
       sizes,
    };
 
-   console.log(sizes);
-
    const handlerSubmitQualitySize = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setLoading(true);
+
       try {
-         await new Promise((resolve) => setTimeout(resolve, 2000));
          const response = await fetch(`${BACKEND_URL}/components/qualities/${componentId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-               name: data.name,
-               orientation: data.orientation,
-               sizes: data.sizes,
-            }),
+            body: JSON.stringify([
+               {
+                  name: data.name,
+                  orientation: data.orientation,
+                  sizes: data.sizes,
+               },
+            ]),
          });
 
          const result = await response.json();
@@ -94,9 +102,17 @@ export default function CreateQualityAndSizePage() {
             return;
          }
 
-         showAlert('success', 'Berhasil menyimpan data Komponen, Kualitas dan Ukuran');
-         setLoading(false);
          setModal(true);
+         // Membersihkan semua inputan
+         setName('');
+         setOrientation(false);
+         setImage([]);
+         setResetForm(true); // Aktifkan reset form
+
+         // Tambahkan timeout untuk mereset kembali state resetForm
+         setTimeout(() => {
+            setResetForm(false);
+         }, 100);
       } catch (err) {
          showAlert('warning', 'Terjadi kesalahan');
       } finally {
@@ -211,7 +227,7 @@ export default function CreateQualityAndSizePage() {
                </div>
             </div>
             <div className="w-full">
-               <SizeForm handlerGetInput={handlerGetSizes} />
+               <SizeForm handlerGetInput={handlerGetSizes} resetForm={resetForm} />
             </div>
          </form>
       </section>

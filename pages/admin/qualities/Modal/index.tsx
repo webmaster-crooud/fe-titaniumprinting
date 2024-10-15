@@ -41,6 +41,7 @@ export const ModalUploadedQualities = ({ data, loading, setLoading, modal, setMo
          showAlert('warning', 'Terjadi kesalahan');
       } finally {
          setLoading(false);
+         setModal(false);
       }
    };
    return (

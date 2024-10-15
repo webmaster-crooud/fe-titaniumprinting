@@ -2,7 +2,7 @@ import { Card } from '@/components/Card';
 import { InputForm } from '@/components/Form/input.form';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import { IconX } from '@tabler/icons-react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 interface DataSize {
@@ -13,8 +13,19 @@ interface DataSize {
    cogs?: number;
 }
 
-export const SizeForm = ({ handlerGetInput }: { handlerGetInput: any }) => {
+interface SizeFormProps {
+   handlerGetInput: (inputs: DataSize[]) => void;
+   resetForm: boolean;
+}
+
+export const SizeForm: React.FC<SizeFormProps> = ({ handlerGetInput, resetForm }) => {
    const [inputs, setInputs] = useState<DataSize[]>([]);
+
+   useEffect(() => {
+      if (resetForm) {
+         setInputs([]);
+      }
+   }, [resetForm]);
 
    const handleAdd = () => {
       setInputs([...inputs, {}]);

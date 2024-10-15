@@ -28,7 +28,6 @@ const CreateComponentsPage = () => {
    };
 
    const handlerTypeComponentChange = (values: any) => {
-      console.log(values.value);
       setTypeComponent(values.value);
    };
 

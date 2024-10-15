@@ -6,7 +6,7 @@ export const showAlert = async (type: string | undefined, message: string) => {
          toast: true,
          position: 'top-end',
          showConfirmButton: false,
-         timer: 2500,
+         timer: 5000,
          width: '40%',
          background: 'rgba(67,97,238,1)',
       });
@@ -20,7 +20,7 @@ export const showAlert = async (type: string | undefined, message: string) => {
          toast: true,
          position: 'top-end',
          showConfirmButton: false,
-         timer: 2500,
+         timer: 5000,
          width: '40%',
          background: '#eab308',
       });
@@ -34,7 +34,7 @@ export const showAlert = async (type: string | undefined, message: string) => {
          toast: true,
          position: 'top-end',
          showConfirmButton: false,
-         timer: 2500,
+         timer: 5000,
          width: '40%',
          background: '#e7515a',
       });

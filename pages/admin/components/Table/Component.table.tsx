@@ -18,6 +18,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 interface DataComponent {
    data: [
@@ -88,15 +89,6 @@ export const ComponentsTable = () => {
       } finally {
          setLoadingDisabled(false);
       }
-   };
-
-   const formatCurrency = (number: number) => {
-      return new Intl.NumberFormat('id-ID', {
-         minimumFractionDigits: 0,
-         maximumFractionDigits: 0,
-         style: 'currency',
-         currency: 'IDR',
-      }).format(number);
    };
 
    return (
