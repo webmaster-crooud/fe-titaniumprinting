@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 interface propsInputForm {
-   label: string;
+   label?: string;
    type?: string;
    value?: string | number | undefined;
    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;

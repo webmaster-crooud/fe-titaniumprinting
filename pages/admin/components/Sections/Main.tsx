@@ -19,7 +19,7 @@ interface HandlerOption {
    valueImage: any;
 }
 
-const options = [
+export const options = [
    { value: 'MATERIAL', label: 'Material' },
    { value: 'ADDON', label: 'Addon' },
    { value: 'FINISHING', label: 'Finishing' },
