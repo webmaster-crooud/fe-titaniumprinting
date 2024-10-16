@@ -15,7 +15,9 @@ import { options } from './Sections/Main';
 import dynamic from 'next/dynamic';
 import { Option } from './create';
 import { Props as SelectProps } from 'react-select';
-import { ModalQuality } from './Modal/quality';
+import { ModalQualityEdit } from './Modal/quality';
+import Tippy from '@tippyjs/react';
+import { ModalSizeEdit } from './Modal/size';
 
 interface Component {
    id: string;
@@ -175,6 +177,27 @@ const DetailComponentPage = () => {
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await fetch(`${BACKEND_URL}/components/qualities/${componentId}/${qualityId}`, {
+         method: 'DELETE',
+      });
+
+      console.log(response);
+      const result = await response.json();
+      if (result.error === true) {
+         showAlert('error', result.message);
+         setLoadingDelete(false);
+      }
+
+      showAlert('success', result.message);
+      setLoadingDelete(false);
+      fetchComponent();
+   };
+
+   const handleDeletedSize = async (qualityId: number, sizeId: number, e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoadingDelete(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await fetch(`${BACKEND_URL}/components/sizes/${qualityId}/${sizeId}`, {
          method: 'DELETE',
       });
 
@@ -423,15 +446,23 @@ const DetailComponentPage = () => {
                                     </span>
                                  </td>
                                  <td className="flex items-center justify-center gap-2 bg-primary-dark-light text-center">
-                                    <ModalQuality componentId={componentId?.toString()} qualityId={quality.id} />
+                                    <ModalQualityEdit
+                                       qualityId={quality.id}
+                                       flag={quality.flag}
+                                       name={quality.name}
+                                       orientation={quality.orientation ? true : false}
+                                       component={fetchComponent}
+                                    />
                                     <form onSubmit={(e) => handleDeletedQuality(quality.id, e)}>
-                                       <button type="submit">
-                                          {loadingDelete ? (
-                                             <IconLoaderQuarter size={14} stroke={2} className="animate-spin" />
-                                          ) : (
-                                             <IconTrash size={14} stroke={2} className="mt-1.5 text-danger" />
-                                          )}
-                                       </button>
+                                       <Tippy content="Hapus">
+                                          <button type="submit">
+                                             {loadingDelete ? (
+                                                <IconLoaderQuarter size={14} stroke={2} className="mt-1.5 animate-spin" />
+                                             ) : (
+                                                <IconTrash size={14} stroke={2} className="mt-1.5 text-danger" />
+                                             )}
+                                          </button>
+                                       </Tippy>
                                     </form>
                                  </td>
                               </tr>
@@ -459,12 +490,28 @@ const DetailComponentPage = () => {
                               {quality.sizes.map((size) => (
                                  <tr key={size.id}>
                                     <td className="flex items-center justify-center gap-2">
-                                       <Link href={'/'}>
-                                          <IconEdit size={16} stroke={2} />
-                                       </Link>
-                                       <Link href={'/'}>
-                                          <IconTrash size={16} stroke={2} />
-                                       </Link>
+                                       <ModalSizeEdit
+                                          qualityId={quality.id}
+                                          sizeId={size.id}
+                                          width={size.width}
+                                          height={size.height}
+                                          weight={size.weight}
+                                          price={size.price}
+                                          cogs={size.cogs}
+                                          components={fetchComponent}
+                                          qualityName={quality.name}
+                                       />
+                                       <form onSubmit={(e) => handleDeletedSize(quality.id, size.id, e)}>
+                                          <Tippy content="Hapus">
+                                             <button type="submit">
+                                                {loadingDelete ? (
+                                                   <IconLoaderQuarter size={14} stroke={2} className="mt-1.5 animate-spin" />
+                                                ) : (
+                                                   <IconTrash size={14} stroke={2} className="mt-1.5 text-danger" />
+                                                )}
+                                             </button>
+                                          </Tippy>
+                                       </form>
                                     </td>
                                     <td className="text-center">{size.width} meter</td>
                                     <td className="text-center">{size.height} meter</td>

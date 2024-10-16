@@ -3,6 +3,7 @@ import { BACKEND_URL } from '@/utils/conf.backend';
 import { Dialog, Transition } from '@headlessui/react';
 import { IconLoaderQuarter, IconTrash, IconX } from '@tabler/icons-react';
 import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import { useRouter } from 'next/router';
 import { useState, Fragment } from 'react';
 
